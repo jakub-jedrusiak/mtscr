@@ -9,7 +9,7 @@ test_that("mtscr_model() works as expected", {
   # Test that the function returns the expected number of fixed and random effects
 
   expect_equal(length(glmmTMB::fixef(model)), 3)
-  expect_equal(length(glmmTMB::ranef(model)), 2)
+  expect_equal(length(glmmTMB::ranef(model)), 3)
 })
 
 # Test that `prepared` argument works as expected
