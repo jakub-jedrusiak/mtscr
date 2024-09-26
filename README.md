@@ -5,11 +5,12 @@
 
 <!-- badges: start -->
 
-[![codecov](https://codecov.io/gh/jakub-jedrusiak/mtscr/branch/main/graph/badge.svg?token=N3UGHFK5QN)](https://app.codecov.io/gh/jakub-jedrusiak/mtscr)
-[![R-CMD-check](https://github.com/jakub-jedrusiak/mtscr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jakub-jedrusiak/mtscr/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN/METACRAN](https://img.shields.io/cran/v/mtscr)](https://CRAN.R-project.org/package=mtscr)
+[![R-CMD-check](https://github.com/jakub-jedrusiak/mtscr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jakub-jedrusiak/mtscr/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/jakub-jedrusiak/mtscr/graph/badge.svg)](https://app.codecov.io/gh/jakub-jedrusiak/mtscr)
 <!-- badges: end -->
 
 An R adaptation of Multidimensional Top Scoring method presented by
@@ -57,6 +58,10 @@ library("mtscr")
 data("mtscr_creativity", package = "mtscr")
 
 mtscr_score(mtscr_creativity, id, item, SemDis_MEAN, top = 1:2)
+#> Warning in checkDepPackageVersion(dep_pkg = "TMB"): Package version inconsistency detected.
+#> glmmTMB was built with TMB version 1.9.11
+#> Current TMB version is 1.9.15
+#> Please re-install glmmTMB from source or restore original 'TMB' package (see '?reinstalling' for more information)
 #> # A tibble: 149 × 3
 #>    id    .creativity_score_top1 .creativity_score_top2
 #>    <chr>                  <dbl>                  <dbl>
