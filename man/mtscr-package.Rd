@@ -8,8 +8,16 @@
 \description{
 Implementation of Multidimensional Top Scoring method for creativity assessment proposed in Boris Forthmann, Maciej Karwowski, Roger E. Beaty (2023) \doi{10.1037/aca0000571}.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/jakub-jedrusiak/mtscr}
+  \item Report bugs at \url{https://github.com/jakub-jedrusiak/mtscr/issues}
+}
+
+}
 \author{
-\strong{Maintainer}: Jakub Jędrusiak \email{kuba23031999@gmail.com} (\href{https://orcid.org/0000-0002-6481-8210}{ORCID}) (University of Wrocław) [copyright holder]
+\strong{Maintainer}: Jakub Jędrusiak \email{jakub.jedrusiak2@uwr.edu.pl} (\href{https://orcid.org/0000-0002-6481-8210}{ORCID}) (University of Wrocław) [copyright holder]
 
 Authors:
 \itemize{

@@ -5,7 +5,7 @@ Version: 1.0.1
 Authors@R: c(
     person(
       "Jakub", "Jędrusiak",
-      email = "kuba23031999@gmail.com",
+      email = "jakub.jedrusiak2@uwr.edu.pl",
       role = c("aut", "cre", "cph"),
       comment = c(
         ORCID = "0000-0002-6481-8210",
@@ -48,7 +48,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/jakub-jedrusiak/mtscr
 BugReports: https://github.com/jakub-jedrusiak/mtscr/issues
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Depends:
     R (>= 4.1.0)
 Imports: 
