@@ -58,10 +58,6 @@ library("mtscr")
 data("mtscr_creativity", package = "mtscr")
 
 mtscr_score(mtscr_creativity, id, item, SemDis_MEAN, top = 1:2)
-#> Warning in checkDepPackageVersion(dep_pkg = "TMB"): Package version inconsistency detected.
-#> glmmTMB was built with TMB version 1.9.11
-#> Current TMB version is 1.9.15
-#> Please re-install glmmTMB from source or restore original 'TMB' package (see '?reinstalling' for more information)
 #> # A tibble: 149 × 3
 #>    id    .creativity_score_top1 .creativity_score_top2
 #>    <chr>                  <dbl>                  <dbl>
