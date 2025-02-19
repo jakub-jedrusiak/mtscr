@@ -102,7 +102,7 @@ find “mtscr GUI” option in RStudio’s Addins menu. Alternatively execute
 ![](./man/figures/README-GUI-example.gif)
 
 > Try web based version
-> [here](https://jakub-jedrusiak.shinyapps.io/mtscr_GUI/)!
+> [here](https://shiny.jakubjedrusiak.pl/mtscr/)!
 
 First thing you see after running the app is
 [`datamods`](https://github.com/dreamRs/datamods) window for importing
