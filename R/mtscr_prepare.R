@@ -3,7 +3,7 @@
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' Starting mtscr 1.1.0 you should not use it
+#' Starting mtscr 2.0.0 you should not use it
 #' by hand but rely on [mtscr()] function. It is exported for backwards compatibility.
 #'
 #' Prepare database for MTS analysis.
@@ -40,7 +40,7 @@ mtscr_prepare <- function(
   self_ranking = NULL
 ) {
   lifecycle::deprecate_soft(
-    "1.1.0",
+    "2.0.0",
     "mtscr_prepare()",
     "mtscr()"
   )

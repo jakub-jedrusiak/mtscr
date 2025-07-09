@@ -1,3 +1,7 @@
+# mtscr 2.0.0
+
+* Rewritten the interface 
+
 # mtscr 1.0.2
 
 * Adapted to glmmTMB 1.1.10.

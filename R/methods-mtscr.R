@@ -3,6 +3,9 @@
 #' @description
 #' Summarise the overall fit of a single model fitted with [mtscr()].
 #'
+#' @param object mtscr model or a mtscr_list object.
+#' @param ... Additional arguments. Currently not used.
+#'
 #' @return A tibble with the following columns:
 #'     \describe{
 #'         \item{model}{The model number (only if a list of models is provided)}
@@ -105,16 +108,16 @@ predict.mtscr <- function(object, ..., minimal = FALSE, id_col = TRUE) {
   top <- stringr::str_remove(names(result[[1]])[[2]], "\\.ordering_")
   scores <- result[[1]] |>
     tibble::as_tibble(rownames = ".id") |>
-    dplyr::select(.id, !!top := `(Intercept)`)
+    dplyr::select(".id", !!top := .data$`(Intercept)`)
 
   if (is.numeric(object$original_df[[id_col_name]])) {
     scores <- scores |>
-      dplyr::mutate(.id = as.numeric(.id))
+      dplyr::mutate(".id" = as.numeric(.data$.id))
   }
 
   if (minimal) {
     if (!id_col) {
-      scores <- dplyr::select(scores, -.id)
+      scores <- dplyr::select(scores, -".id")
     }
     return(scores)
   }
@@ -138,7 +141,7 @@ predict.mtscr_list <- function(object, ..., minimal = FALSE, id_col = TRUE) {
 
   if (minimal) {
     if (!id_col) {
-      scores <- dplyr::select(scores, -.id)
+      scores <- dplyr::select(scores, -".id")
     } else {
       scores <- scores |>
         dplyr::rename(!!id_col_name := ".id")
@@ -149,6 +152,6 @@ predict.mtscr_list <- function(object, ..., minimal = FALSE, id_col = TRUE) {
   dplyr::left_join(
     object[[1]]$original_df,
     scores,
-    by = dplyr::join_by(!!id_col_name == .id)
+    by = dplyr::join_by(!!id_col_name == ".id")
   )
 }

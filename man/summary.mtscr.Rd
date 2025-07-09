@@ -9,6 +9,11 @@
 
 \method{summary}{mtscr_list}(object, ...)
 }
+\arguments{
+\item{object}{mtscr model or a mtscr_list object.}
+
+\item{...}{Additional arguments. Currently not used.}
+}
 \value{
 A tibble with the following columns:
 \describe{

@@ -53,7 +53,7 @@ mtscr_model <- function(
   normalise = TRUE,
   self_ranking = NULL
 ) {
-  lifecycle::deprecate_warn("1.1.0", "mtscr_model()", "mtscr()")
+  lifecycle::deprecate_warn("2.0.0", "mtscr_model()", "mtscr()")
   id_column <- rlang::ensym(id_column)
   item_column_quo <- rlang::enquo(item_column)
   if (!rlang::quo_is_null(item_column_quo)) {
