@@ -3,10 +3,13 @@ require("mtscr")
 
 # UI ----
 ui <- fluidPage(
-  tag("link", list(
-    rel = "stylesheet",
-    href = "https://fonts.googleapis.com/css?family=Raleway"
-  )),
+  tag(
+    "link",
+    list(
+      rel = "stylesheet",
+      href = "https://fonts.googleapis.com/css?family=Raleway"
+    )
+  ),
   includeCSS("./www/styles.css"),
   titlePanel("Multidimentional Top Scoring for Creativity Research"),
   ## Sidebar ----
@@ -74,17 +77,43 @@ server <- function(input, output, session) {
     req(imported$data())
     list(
       br(),
-      selectInput("id_column", "Select ID column:", choices = colnames(imported$data())),
-      selectInput("score_column", "Select score column:", choices = colnames(
-        dplyr::select(
-          imported$data(),
-          dplyr::where(is.numeric)
+      selectInput(
+        "id_column",
+        "Select ID column:",
+        choices = colnames(imported$data())
+      ),
+      selectInput(
+        "score_column",
+        "Select score column:",
+        choices = colnames(
+          dplyr::select(
+            imported$data(),
+            dplyr::where(is.numeric)
+          )
         )
-      )),
-      selectInput("item_column", "Select item column:", choices = c("no item column", colnames(imported$data()))),
-      selectInput("ties_method", "Select ties method", choices = c("random (better for ratings)", "average (better for continous scores)")),
-      checkboxInput("normalise", "Normalise scores (recommended)", value = TRUE),
-      actionButton("self_ranking_info", "What is self-ranking and how to format it?"),
+      ),
+      selectInput(
+        "item_column",
+        "Select item column:",
+        choices = c("no item column", colnames(imported$data()))
+      ),
+      selectInput(
+        "ties_method",
+        "Select ties method",
+        choices = c(
+          "random (better for ratings)",
+          "average (better for continous scores)"
+        )
+      ),
+      checkboxInput(
+        "normalise",
+        "Normalise scores (recommended)",
+        value = TRUE
+      ),
+      actionButton(
+        "self_ranking_info",
+        "What is self-ranking and how to format it?"
+      ),
       selectInput(
         "self_ranking",
         "Column with self-ranking:",
@@ -96,7 +125,13 @@ server <- function(input, output, session) {
           ))
         )
       ),
-      sliderInput("top", "Max number of top answers to be included:", value = 1, min = 1, max = 10),
+      sliderInput(
+        "top",
+        "Max number of top answers to be included:",
+        value = 1,
+        min = 1,
+        max = 10
+      ),
       actionButton("generate_model", "Generate model →")
     )
   })
@@ -122,7 +157,11 @@ server <- function(input, output, session) {
       item_col <- input$item_column
     }
     score_col <- input$score_column
-    ties_method <- ifelse(input$ties_method == "random (better for ratings)", "random", "average")
+    ties_method <- ifelse(
+      input$ties_method == "random (better for ratings)",
+      "random",
+      "average"
+    )
     top <- seq(1, input$top)
     normalise <- input$normalise
     if (input$self_ranking == "no self-ranking") {
@@ -130,7 +169,16 @@ server <- function(input, output, session) {
     } else {
       self_ranking <- input$self_ranking
     }
-    model <- mtscr::mtscr(data, {{ id_col }}, {{ score_col }}, {{ item_col }}, top = top, ties_method = ties_method, normalise = normalise, self_ranking = {{ self_ranking }})
+    model <- mtscr::mtscr(
+      data,
+      {{ id_col }},
+      {{ score_col }},
+      {{ item_col }},
+      top = top,
+      ties_method = ties_method,
+      normalise = normalise,
+      self_ranking = {{ self_ranking }}
+    )
     models_summary <- summary(model)
 
     ### Make UI for summaries ----

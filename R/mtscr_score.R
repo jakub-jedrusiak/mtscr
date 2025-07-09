@@ -1,4 +1,9 @@
 #' Score creativity with MTS
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function was deprecated in favour of [mtscr()]. Also see [predict.mtscr()]
+#' for extracting the scores. Note that the item column is now after the score column.
 #'
 #' @inheritParams mtscr_prepare
 #' @inheritParams mtscr_model
@@ -15,8 +20,10 @@
 #' @seealso [tidyr::pivot_wider] for converting the output to wide format by yourself.
 #'
 #' @export
+#' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' data("mtscr_creativity", package = "mtscr")
 #' mtscr_score(mtscr_creativity, id, item, SemDis_MEAN, top = 1:2)
 #'
@@ -26,6 +33,7 @@
 #' # use self-chosen best answers
 #' data("mtscr_self_rank", package = "mtscr")
 #' mtscr_score(mtscr_self_rank, subject, task, avr, self_ranking = top_two)
+#' }
 mtscr_score <- function(
   df,
   id_column,

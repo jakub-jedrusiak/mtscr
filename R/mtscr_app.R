@@ -28,7 +28,7 @@
 #' column and `SemDis_MEAN` for the score column.
 #'
 #' @seealso
-#'   [mtscr::mtscr_score()] for more information on the arguments.
+#'   [mtscr()] for more information on the arguments.
 #'
 #'   [mtscr_creativity] for more information about the example dataset.
 #'
@@ -44,14 +44,24 @@
 mtscr_app <- function() {
   needed_packages <- c("shiny", "DT", "datamods", "writexl", "shinyWidgets")
 
-  needed_packages <- sapply(needed_packages, \(x) {
-    if (system.file(package = x) != "") {
-      c("v" = paste0("You have {.pkg ", x, "} installed."))
-    } else {
-      c("x" = paste0("You don't have {.pkg ", x, "} installed. Install it with {.run install.packages(\"", x, "\")}."))
-    }
-  },
-  USE.NAMES = FALSE
+  needed_packages <- sapply(
+    needed_packages,
+    \(x) {
+      if (system.file(package = x) != "") {
+        c("v" = paste0("You have {.pkg ", x, "} installed."))
+      } else {
+        c(
+          "x" = paste0(
+            "You don't have {.pkg ",
+            x,
+            "} installed. Install it with {.run install.packages(\"",
+            x,
+            "\")}."
+          )
+        )
+      }
+    },
+    USE.NAMES = FALSE
   )
 
   if (any(names(needed_packages) == "x")) {

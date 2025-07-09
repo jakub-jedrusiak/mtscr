@@ -12,7 +12,7 @@ A tibble with 3225 rows and 4 columns:
 \item{subject}{patricipant's unique identification number}
 \item{task}{divergent thinking task number}
 \item{avr}{average judges' raiting}
-\item{top_two}{indicator of self-chosen two best answer; 1 if chosen, 0 if not}
+\item{top_two}{indicator of self-chosen two best answers; 1 if chosen, 0 if not}
 }
 }
 }
@@ -24,7 +24,7 @@ mtscr_self_rank
 }
 \description{
 An example dataset with best answers self-chosen by the participant. Use with \code{self_ranking}
-argument in \link[=mtscr_model]{mtscr_model}.
+argument in \link[=mtscr]{mtscr()}.
 }
 \references{
 \doi{10.1037/aca0000571}

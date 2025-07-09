@@ -45,12 +45,11 @@ was provided. See \link{mtscr_self_rank} for example.}
 }
 \value{
 The return value depends on length of the \code{top} argument. If \code{top} is a single
-integer, a \code{glmmTMB} model is returned. If \code{top} is a vector of integers, a list
-of \code{glmmTMB} models is returned, with names corresponding to the \code{top} values,
-e.g. \code{top1}, \code{top2}, etc.
+integer, a \code{mtscr} model is returned. If \code{top} is a vector of integers, a \code{mtscr_list} object
+is returned, with names corresponding to the \code{top} values, e.g. \code{top1}, \code{top2}, etc.
 }
 \description{
-Create MTS model for creativity analysis.
+Create MTS model for creativity analysis. Use with \code{\link[=summary.mtscr]{summary.mtscr()}} and \code{\link[=predict.mtscr]{predict.mtscr()}}.
 }
 \examples{
 data("mtscr_creativity", package = "mtscr")
@@ -58,14 +57,30 @@ data("mtscr_creativity", package = "mtscr")
 mtscr_creativity <- mtscr_creativity |>
   dplyr::slice_sample(n = 500) # for performance, ignore
 
-mtscr(mtscr_creativity, id, item, SemDis_MEAN) |>
+# single model for top 1 answer
+mtscr(mtscr_creativity, id, SemDis_MEAN, item) |>
   summary()
 
 # three models for top 1, 2, and 3 answers
-mtscr(mtscr_creativity, id, item, SemDis_MEAN, top = 1:3) |>
-  mtscr_model_summary()
+fit3 <- mtscr(
+  mtscr_creativity,
+  id,
+  SemDis_MEAN,
+  item,
+  top = 1:3,
+  ties_method = "average"
+)
 
-# extract effects for creativity score by hand
-model <- mtscr(mtscr_creativity, id, item, SemDis_MEAN, top = 1)
-creativity_score <- glmmTMB::ranef(model)$cond$id[, 1]
+# add the scores to the database
+predict(fit3)
+
+# get the socres only
+predict(fit3, minimal = TRUE)
+
+}
+\seealso{
+\itemize{
+\item \code{\link[=summary.mtscr]{summary.mtscr()}} for the fit measures of the model.
+\item \code{\link[=predict.mtscr]{predict.mtscr()}} for getting the scores.
+}
 }

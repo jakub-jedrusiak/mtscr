@@ -39,7 +39,7 @@ mtscr_app()
 }
 }
 \seealso{
-\code{\link[=mtscr_score]{mtscr_score()}} for more information on the arguments.
+\code{\link[=mtscr]{mtscr()}} for more information on the arguments.
 
 \link{mtscr_creativity} for more information about the example dataset.
 

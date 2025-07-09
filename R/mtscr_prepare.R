@@ -1,7 +1,12 @@
 #' Prepare database for MTS
 #'
-#' Prepare database for MTS analysis. Starting mtscr 1.1.0 you should not use it
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Starting mtscr 1.1.0 you should not use it
 #' by hand but rely on [mtscr()] function. It is exported for backwards compatibility.
+#'
+#' Prepare database for MTS analysis.
 #'
 #' @inheritParams mtscr
 #'
@@ -17,9 +22,12 @@
 #'     participants scored for different tasks (e.g. uses for "brick" and "can") are distinct.
 #'
 #' @examples
+#' \dontrun{
 #' data("mtscr_creativity", package = "mtscr")
 #' # Indicators for top 1 and top 2 answers
 #' mtscr_prepare(mtscr_creativity, id, item, SemDis_MEAN, top = 1:2, minimal = TRUE)
+#' }
+#' @keywords internal
 mtscr_prepare <- function(
   df,
   id_column,
@@ -31,6 +39,12 @@ mtscr_prepare <- function(
   normalise = TRUE,
   self_ranking = NULL
 ) {
+  lifecycle::deprecate_soft(
+    "1.1.0",
+    "mtscr_prepare()",
+    "mtscr()"
+  )
+
   id_column <- rlang::ensym(id_column)
   item_column_quo <- rlang::enquo(item_column)
   if (!rlang::quo_is_null(item_column_quo)) {

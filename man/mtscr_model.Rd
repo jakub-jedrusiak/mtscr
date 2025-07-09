@@ -53,9 +53,14 @@ of \code{glmmTMB} models is returned, with names corresponding to the \code{top}
 e.g. \code{top1}, \code{top2}, etc.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function was deprecated in favour of \code{\link[=mtscr]{mtscr()}}.
+
 Create MTS model for creativity analysis.
 }
 \examples{
+\dontrun{
 data("mtscr_creativity", package = "mtscr")
 
 mtscr_creativity <- mtscr_creativity |>
@@ -76,3 +81,5 @@ mtscr_model(data, id, item, SemDis_MEAN, prepared = TRUE)
 model <- mtscr_model(mtscr_creativity, id, item, SemDis_MEAN, top = 1)
 creativity_score <- glmmTMB::ranef(model)$cond$id[, 1]
 }
+}
+\keyword{internal}

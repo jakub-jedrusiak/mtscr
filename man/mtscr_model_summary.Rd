@@ -25,12 +25,20 @@ A data frame with the following columns:
 }
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function was deprecated in favour of simple \code{\link[=summary.mtscr]{summary.mtscr()}}
+that you can use with models fitted with \code{\link[=mtscr]{mtscr()}}.
+
 Summarise a model generated with \code{\link{mtscr_model}} with
 some basic statistics; calculate the empirical reliability
 and the first difference of the empirical reliability.
 }
 \examples{
+\dontrun{
 data("mtscr_creativity", package = "mtscr")
 mtscr_model(mtscr_creativity, id, item, SemDis_MEAN, top = 1:3) |>
   mtscr_model_summary()
 }
+}
+\keyword{internal}

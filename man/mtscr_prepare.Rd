@@ -57,11 +57,18 @@ relative to the participant AND item, so the values for different
 participants scored for different tasks (e.g. uses for "brick" and "can") are distinct.
 }
 \description{
-Prepare database for MTS analysis. Starting mtscr 1.1.0 you should not use it
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+Starting mtscr 1.1.0 you should not use it
 by hand but rely on \code{\link[=mtscr]{mtscr()}} function. It is exported for backwards compatibility.
+
+Prepare database for MTS analysis.
 }
 \examples{
+\dontrun{
 data("mtscr_creativity", package = "mtscr")
 # Indicators for top 1 and top 2 answers
 mtscr_prepare(mtscr_creativity, id, item, SemDis_MEAN, top = 1:2, minimal = TRUE)
 }
+}
+\keyword{internal}

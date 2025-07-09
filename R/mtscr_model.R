@@ -1,5 +1,10 @@
 #' Create MTS model
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function was deprecated in favour of [mtscr()].
+#'
 #' Create MTS model for creativity analysis.
 #'
 #' @inheritParams mtscr_prepare
@@ -13,8 +18,10 @@
 #'     e.g. `top1`, `top2`, etc.
 #'
 #' @export
+#' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' data("mtscr_creativity", package = "mtscr")
 #'
 #' mtscr_creativity <- mtscr_creativity |>
@@ -34,6 +41,7 @@
 #' # extract effects for creativity score by hand
 #' model <- mtscr_model(mtscr_creativity, id, item, SemDis_MEAN, top = 1)
 #' creativity_score <- glmmTMB::ranef(model)$cond$id[, 1]
+#' }
 mtscr_model <- function(
   df,
   id_column,
