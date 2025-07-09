@@ -56,9 +56,13 @@ returned with scores columns added. Otherwise, only the scores and id columns ar
 number of creativity scores columns (e.g. \code{creativity_score_top2}) depends on the \code{top} argument.
 }
 \description{
-Score creativity with MTS
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function was deprecated in favour of \code{\link[=mtscr]{mtscr()}}. Also see \code{\link[=predict.mtscr]{predict.mtscr()}}
+for extracting the scores. Note that the item column is now after the score column.
 }
 \examples{
+\dontrun{
 data("mtscr_creativity", package = "mtscr")
 mtscr_score(mtscr_creativity, id, item, SemDis_MEAN, top = 1:2)
 
@@ -69,6 +73,8 @@ mtscr_score(mtscr_creativity, id, item, SemDis_MEAN, format = "full")
 data("mtscr_self_rank", package = "mtscr")
 mtscr_score(mtscr_self_rank, subject, task, avr, self_ranking = top_two)
 }
-\seealso{
-\code{\link[tidyr:pivot_wider]{tidyr::pivot_wider()}} for converting the output to wide format by yourself.
 }
+\seealso{
+\link[tidyr:pivot_wider]{tidyr::pivot_wider} for converting the output to wide format by yourself.
+}
+\keyword{internal}

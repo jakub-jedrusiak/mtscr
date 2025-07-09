@@ -16,22 +16,20 @@ Shiny app used as graphical interface for mtscr. Simply invoke \code{mtscr_app()
 To use the GUI you need to have the following packages installed:
 \code{DT}, \code{broom.mixed}, \code{datamods}, \code{writexl}.
 
-First thing you see after running the app is \code{datamods} window for importing your data.
-You can use the data already loaded in your environment or any other option.
-Then you'll see four dropdown lists used to choose arguments for \code{mtscr_model()}
-and \code{mtscr_score()} functions. Consult these functions' documentation for
-more details (execute \code{?mtscr_score} in the console). When the parameters are chosen,
-click "Generate model" button. After a while (up to a dozen or so seconds) models'
-parameters and are shown along with a scored dataframe.
+First thing you see after running the app is \href{https://github.com/dreamRs/datamods}{\code{datamods}}
+window for importing your data. You can use the data already loaded in your environment
+or any other option. Then you'll see four dropdown lists used to choose arguments for the functions.
+Consult the documentation for more details (execute \code{?mtscr} in the console).
+When the parameters are chosen, click "Generate model" button. After a while
+(up to a dozen or so seconds) models' parameters and are shown along with a scored dataframe.
 
 You can download your data as a .csv or an .xlsx file using buttons in the sidebar.
-You can either download the scores only (i.e. the dataframe you see displayed) or
-your whole data with \code{.all_max} and \code{.all_top2} columns added.
+You can either download the scores only (i.e. the dataframe you see displayed)
+or your whole data with scores columns added.
 
-For testing purposes, you may use \code{mtscr_creativity} dataframe. In the importing
-window change "Global Environment" to "mtscr" and our dataframe should appear
-in the upper dropdown list. Use \code{id} for the ID column, \code{item} for the item
-column and \code{SemDis_MEAN} for the score column.
+For testing purposes, you may use \code{mtscr_creativity} dataframe. In the importing window change
+"Global Environment" to "mtscr" and our dataframe should appear in the upper dropdown list.
+Use \code{id} for the ID column, \code{item} for the item column and \code{SemDis_MEAN} for the score column.
 }
 \examples{
 if(interactive()){
@@ -39,7 +37,7 @@ mtscr_app()
 }
 }
 \seealso{
-\code{\link[=mtscr_score]{mtscr_score()}} for more information on the arguments.
+\code{\link[=mtscr]{mtscr()}} for more information on the arguments.
 
 \link{mtscr_creativity} for more information about the example dataset.
 

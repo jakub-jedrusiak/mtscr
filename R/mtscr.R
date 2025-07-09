@@ -1,59 +1,73 @@
 #' Create MTS model
 #'
-#' @description
-#' `r lifecycle::badge("deprecated")`
+#' Create MTS model for creativity analysis. Use with [summary.mtscr()] and [predict.mtscr()].
 #'
-#' This function was deprecated in favour of [mtscr()].
-#'
-#' Create MTS model for creativity analysis.
-#'
-#' @inheritParams mtscr_prepare
+#' @param df Data frame in long format.
+#' @param id_column Name of the column containing participants' id.
+#' @param score_column Name of the column containing divergent thinking scores
+#'     (e.g. semantic distance).
+#' @param item_column Optional, name of the column containing distinct trials
+#'     (e.g. names of items in AUT).
 #' @param top Integer or vector of integers (see examples), number of top answers
-#'     to include in the model. Default is 1, i.e. only the top answer.
-#' @param prepared Logical, is the data already prepared with `mtscr_prepare()`?
+#'     to prepare indicators for. Default is 1, i.e. only the top answer.
+#' @param ties_method Character string specifying how ties are treated when
+#'     ordering. Can be `"average"` (better for continuous scores like semantic
+#'     distance) or `"random"` (default, better for ratings). See [rank()] for details.
+#' @param normalise Logical, should the creativity score be normalised? Default is `TRUE` and
+#'    it's recommended to leave it as such.
+#' @param self_ranking Name of the column containing answers' self-ranking.
+#'     Provide if model should be based on top answers self-chosen by the participant.
+#'     Every item should have its own ranks. The top answers should have a value of 1,
+#'     and the other answers should have a value of 0. In that case, the `top` argument
+#'     doesn't change anything and should be left as `top = 1`. `ties_method` is not used if `self_ranking`
+#'     was provided. See [mtscr_self_rank] for example.
 #'
 #' @return The return value depends on length of the `top` argument. If `top` is a single
-#'     integer, a `glmmTMB` model is returned. If `top` is a vector of integers, a list
-#'     of `glmmTMB` models is returned, with names corresponding to the `top` values,
-#'     e.g. `top1`, `top2`, etc.
+#'     integer, a `mtscr` model is returned. If `top` is a vector of integers, a `mtscr_list` object
+#'     is returned, with names corresponding to the `top` values, e.g. `top1`, `top2`, etc.
 #'
 #' @export
-#' @keywords internal
 #'
 #' @examples
-#' \dontrun{
 #' data("mtscr_creativity", package = "mtscr")
 #'
 #' mtscr_creativity <- mtscr_creativity |>
-#'   dplyr::slice_sample(n = 300) # for performance, ignore
+#'   dplyr::slice_sample(n = 500) # for performance, ignore
 #'
-#' mtscr_model(mtscr_creativity, id, item, SemDis_MEAN) |>
+#' # single model for top 1 answer
+#' mtscr(mtscr_creativity, id, SemDis_MEAN, item) |>
 #'   summary()
 #'
 #' # three models for top 1, 2, and 3 answers
-#' mtscr_model(mtscr_creativity, id, item, SemDis_MEAN, top = 1:3) |>
-#'   mtscr_model_summary()
+#' fit3 <- mtscr(
+#'   mtscr_creativity,
+#'   id,
+#'   SemDis_MEAN,
+#'   item,
+#'   top = 1:3,
+#'   ties_method = "average"
+#' )
 #'
-#' # you can prepare data first
-#' data <- mtscr_prepare(mtscr_creativity, id, item, SemDis_MEAN)
-#' mtscr_model(data, id, item, SemDis_MEAN, prepared = TRUE)
+#' # add the scores to the database
+#' predict(fit3)
 #'
-#' # extract effects for creativity score by hand
-#' model <- mtscr_model(mtscr_creativity, id, item, SemDis_MEAN, top = 1)
-#' creativity_score <- glmmTMB::ranef(model)$cond$id[, 1]
-#' }
-mtscr_model <- function(
+#' # get the socres only
+#' predict(fit3, minimal = TRUE)
+#'
+#' @seealso
+#' - [summary.mtscr()] for the fit measures of the model.
+#' - [predict.mtscr()] for getting the scores.
+
+mtscr <- function(
   df,
   id_column,
-  item_column = NULL,
   score_column,
+  item_column = NULL,
   top = 1,
-  prepared = FALSE,
   ties_method = c("random", "average"),
   normalise = TRUE,
   self_ranking = NULL
 ) {
-  lifecycle::deprecate_warn("2.0.0", "mtscr_model()", "mtscr()")
   id_column <- rlang::ensym(id_column)
   item_column_quo <- rlang::enquo(item_column)
   if (!rlang::quo_is_null(item_column_quo)) {
@@ -70,46 +84,19 @@ mtscr_model <- function(
     self_ranking <- self_ranking_quo
   }
 
-  # check if all .ordering_X columns exist
-  present_ordering_columns <- purrr::map(
-    as.list(top),
-    \(x) {
-      paste0(".ordering_top", x)
-    }
-  )
-  if (prepared && !any(present_ordering_columns %in% names(df))) {
-    cli::cli_warn(
-      c(
-        "Couldn't find all {.var .ordering_top} columns.",
-        "i" = "The dataframe was prepared again."
-      )
-    )
-    prepared <- FALSE
-  }
-
-  # determine if normalise = TRUE when prepared = TRUE
-  if (prepared) {
-    if (rlang::has_name(df, ".z_score")) {
-      normalise <- TRUE
-    } else {
-      normalise <- FALSE
-    }
-  }
-
   # prepare
-  if (!prepared) {
-    df <- mtscr_prepare(
-      df,
-      !!id_column,
-      !!item_column,
-      !!score_column,
-      top = top,
-      minimal = TRUE,
-      ties_method = ties_method,
-      normalise = normalise,
-      self_ranking = !!self_ranking
-    )
-  }
+  original_df <- df
+  df <- mtscr_wrangle(
+    df,
+    !!id_column,
+    !!item_column,
+    !!score_column,
+    top = top,
+    minimal = TRUE,
+    ties_method = ties_method,
+    normalise = normalise,
+    self_ranking = !!self_ranking
+  )
 
   # implicit conversion to factors
   df <- df |>
@@ -183,12 +170,12 @@ mtscr_model <- function(
   })
 
   if (length(ordering_columns) == 1) {
-    return(models[[1]])
+    return(new_mtscr(models[[1]], df = original_df))
   } else {
     names(models) <- paste0(
       "top",
       stringr::str_remove(ordering_columns, "\\.ordering_top")
     )
-    return(models)
+    return(new_mtscr_list(!!!models, df = original_df))
   }
 }

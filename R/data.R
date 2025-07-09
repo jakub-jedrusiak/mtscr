@@ -4,7 +4,7 @@
 #' It contains a set of responses in Alternative Uses Task for different items with their
 #' semantic distance assessment.
 #'
-#' @return a [tibble][tibble::tibble-package]
+#' @return a [tibble][tibble::tibble]
 #' @format ## `mtscr_creativity`
 #' A `tibble` with 4585 rows and 10 columns:
 #' \describe{
@@ -22,7 +22,7 @@
 #' @title Self-chosen best answers
 #' @description
 #' An example dataset with best answers self-chosen by the participant. Use with `self_ranking`
-#' argument in [mtscr_model][mtscr::mtscr_model].
+#' argument in [mtscr()][mtscr::mtscr].
 #'
 #' @format ## `mtscr_self_rank`
 #' A tibble with 3225 rows and 4 columns:
@@ -30,7 +30,7 @@
 #'   \item{subject}{patricipant's unique identification number}
 #'   \item{task}{divergent thinking task number}
 #'   \item{avr}{average judges' raiting}
-#'   \item{top_two}{indicator of self-chosen two best answer; 1 if chosen, 0 if not}
+#'   \item{top_two}{indicator of self-chosen two best answers; 1 if chosen, 0 if not}
 #' }
 #'
 #' @source <https://osf.io/7rgsp/>

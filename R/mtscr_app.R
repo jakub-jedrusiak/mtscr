@@ -10,25 +10,23 @@
 #' To use the GUI you need to have the following packages installed:
 #' `DT`, `broom.mixed`, `datamods`, `writexl`.
 #'
-#' First thing you see after running the app is `datamods` window for importing your data.
-#' You can use the data already loaded in your environment or any other option.
-#' Then you'll see four dropdown lists used to choose arguments for `mtscr_model()`
-#' and `mtscr_score()` functions. Consult these functions' documentation for
-#' more details (execute `?mtscr_score` in the console). When the parameters are chosen,
-#' click "Generate model" button. After a while (up to a dozen or so seconds) models'
-#' parameters and are shown along with a scored dataframe.
+#' First thing you see after running the app is [`datamods`](https://github.com/dreamRs/datamods)
+#' window for importing your data. You can use the data already loaded in your environment
+#' or any other option. Then you'll see four dropdown lists used to choose arguments for the functions.
+#' Consult the documentation for more details (execute `?mtscr` in the console).
+#' When the parameters are chosen, click "Generate model" button. After a while
+#' (up to a dozen or so seconds) models' parameters and are shown along with a scored dataframe.
 #'
 #' You can download your data as a .csv or an .xlsx file using buttons in the sidebar.
-#' You can either download the scores only (i.e. the dataframe you see displayed) or
-#' your whole data with `.all_max` and `.all_top2` columns added.
+#' You can either download the scores only (i.e. the dataframe you see displayed)
+#' or your whole data with scores columns added.
 #'
-#' For testing purposes, you may use `mtscr_creativity` dataframe. In the importing
-#' window change "Global Environment" to "mtscr" and our dataframe should appear
-#' in the upper dropdown list. Use `id` for the ID column, `item` for the item
-#' column and `SemDis_MEAN` for the score column.
+#' For testing purposes, you may use `mtscr_creativity` dataframe. In the importing window change
+#' "Global Environment" to "mtscr" and our dataframe should appear in the upper dropdown list.
+#' Use `id` for the ID column, `item` for the item column and `SemDis_MEAN` for the score column.
 #'
 #' @seealso
-#'   [mtscr::mtscr_score()] for more information on the arguments.
+#'   [mtscr()] for more information on the arguments.
 #'
 #'   [mtscr_creativity] for more information about the example dataset.
 #'
@@ -44,14 +42,24 @@
 mtscr_app <- function() {
   needed_packages <- c("shiny", "DT", "datamods", "writexl", "shinyWidgets")
 
-  needed_packages <- sapply(needed_packages, \(x) {
-    if (system.file(package = x) != "") {
-      c("v" = paste0("You have {.pkg ", x, "} installed."))
-    } else {
-      c("x" = paste0("You don't have {.pkg ", x, "} installed. Install it with {.run install.packages(\"", x, "\")}."))
-    }
-  },
-  USE.NAMES = FALSE
+  needed_packages <- sapply(
+    needed_packages,
+    \(x) {
+      if (system.file(package = x) != "") {
+        c("v" = paste0("You have {.pkg ", x, "} installed."))
+      } else {
+        c(
+          "x" = paste0(
+            "You don't have {.pkg ",
+            x,
+            "} installed. Install it with {.run install.packages(\"",
+            x,
+            "\")}."
+          )
+        )
+      }
+    },
+    USE.NAMES = FALSE
   )
 
   if (any(names(needed_packages) == "x")) {

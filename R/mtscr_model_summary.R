@@ -1,5 +1,11 @@
 #' Summarise a model
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function was deprecated in favour of simple [summary.mtscr()]
+#' that you can use with models fitted with [mtscr()].
+#'
 #' Summarise a model generated with \code{\link{mtscr_model}} with
 #' some basic statistics; calculate the empirical reliability
 #' and the first difference of the empirical reliability.
@@ -20,12 +26,16 @@
 #'         \item{FDI}{The first difference of the empirical reliability}
 #'     }
 #' @export
+#' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' data("mtscr_creativity", package = "mtscr")
 #' mtscr_model(mtscr_creativity, id, item, SemDis_MEAN, top = 1:3) |>
 #'   mtscr_model_summary()
+#' }
 mtscr_model_summary <- function(model) {
+  lifecycle::deprecate_warn("2.0.0", "mtscr_model_summary()", "mtscr()")
   if (!methods::is(model, "list")) {
     model <- list(model)
   }

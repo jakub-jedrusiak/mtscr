@@ -1,11 +1,5 @@
 #' Prepare database for MTS
 #'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#'
-#' Starting mtscr 2.0.0 you should not use it
-#' by hand but rely on [mtscr()] function. It is exported for backwards compatibility.
-#'
 #' Prepare database for MTS analysis.
 #'
 #' @inheritParams mtscr
@@ -21,14 +15,8 @@
 #'     relative to the participant AND item, so the values for different
 #'     participants scored for different tasks (e.g. uses for "brick" and "can") are distinct.
 #'
-#' @examples
-#' \dontrun{
-#' data("mtscr_creativity", package = "mtscr")
-#' # Indicators for top 1 and top 2 answers
-#' mtscr_prepare(mtscr_creativity, id, item, SemDis_MEAN, top = 1:2, minimal = TRUE)
-#' }
 #' @keywords internal
-mtscr_prepare <- function(
+mtscr_wrangle <- function(
   df,
   id_column,
   item_column = NULL,
@@ -39,12 +27,6 @@ mtscr_prepare <- function(
   normalise = TRUE,
   self_ranking = NULL
 ) {
-  lifecycle::deprecate_soft(
-    "2.0.0",
-    "mtscr_prepare()",
-    "mtscr()"
-  )
-
   id_column <- rlang::ensym(id_column)
   item_column_quo <- rlang::enquo(item_column)
   if (!rlang::quo_is_null(item_column_quo)) {
@@ -211,15 +193,6 @@ mtscr_prepare <- function(
   df <- df |>
     dplyr::arrange({{ id_column }}, {{ item_column }}, {{ score_column }})
 
-  # if (normalise) {
-  #   base_cols <- df |>
-  #     dplyr::mutate(
-  #       .ordering = rank(
-  #         -.data$.z_score, # minus for descending order
-  #         ties.method = ties_method
-  #       ) - 1 # -1 to start with 0
-  #     )
-  # } else {
   base_cols <- df |>
     dplyr::mutate(
       .ordering = rank(
@@ -228,7 +201,6 @@ mtscr_prepare <- function(
       ) -
         1 # -1 to start with 0
     )
-  # }
 
   if (!rlang::quo_is_null(self_ranking_quo)) {
     base_cols <- base_cols |>
