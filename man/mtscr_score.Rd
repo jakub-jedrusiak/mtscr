@@ -70,5 +70,5 @@ data("mtscr_self_rank", package = "mtscr")
 mtscr_score(mtscr_self_rank, subject, task, avr, self_ranking = top_two)
 }
 \seealso{
-\code{\link[tidyr:pivot_wider]{tidyr::pivot_wider()}} for converting the output to wide format by yourself.
+\link[tidyr:pivot_wider]{tidyr::pivot_wider} for converting the output to wide format by yourself.
 }

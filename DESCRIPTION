@@ -61,9 +61,10 @@ Imports:
     methods,
     purrr,
     readr,
-    rlang (>= 0.4.11),
+    rlang,
     stringr,
-    tibble
+    tibble,
+    tidyr
 Suggests: 
     shiny,
     covr,

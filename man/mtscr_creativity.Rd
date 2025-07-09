@@ -23,7 +23,7 @@ A \code{tibble} with 4585 rows and 10 columns:
 mtscr_creativity
 }
 \value{
-a \link[tibble:tibble-package]{tibble}
+a \link[tibble:tibble]{tibble}
 }
 \description{
 A dataset from Forthmann, Karwowski & Beaty (2023) paper.

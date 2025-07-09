@@ -2,9 +2,11 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @import rlang
 #' @importFrom glue glue
 #' @importFrom lifecycle deprecated
+#' @importFrom rlang :=
+#' @importFrom rlang !!!
 #' @importFrom tibble tibble
+#' @importFrom tidyr pivot_wider
 ## usethis namespace: end
 NULL

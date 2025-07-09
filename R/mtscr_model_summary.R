@@ -26,6 +26,7 @@
 #' mtscr_model(mtscr_creativity, id, item, SemDis_MEAN, top = 1:3) |>
 #'   mtscr_model_summary()
 mtscr_model_summary <- function(model) {
+  lifecycle::deprecate_warn("1.1.0", "mtscr_model_summary()", "mtscr()")
   if (!methods::is(model, "list")) {
     model <- list(model)
   }

@@ -2,7 +2,6 @@
 % Please edit documentation in R/mtscr-package.R
 \docType{package}
 \name{mtscr-package}
-\alias{mtscr}
 \alias{mtscr-package}
 \title{mtscr: Multidimensional Top Scoring for Creativity Research}
 \description{

@@ -12,7 +12,7 @@
 #' returned with scores columns added. Otherwise, only the scores and id columns are returned.
 #' number of creativity scores columns (e.g. `creativity_score_top2`) depends on the `top` argument.
 #'
-#' @seealso [tidyr::pivot_wider()] for converting the output to wide format by yourself.
+#' @seealso [tidyr::pivot_wider] for converting the output to wide format by yourself.
 #'
 #' @export
 #'
@@ -26,7 +26,18 @@
 #' # use self-chosen best answers
 #' data("mtscr_self_rank", package = "mtscr")
 #' mtscr_score(mtscr_self_rank, subject, task, avr, self_ranking = top_two)
-mtscr_score <- function(df, id_column, item_column = NULL, score_column, top = 1, format = c("minimal", "full"), ties_method = c("random", "average"), normalise = TRUE, self_ranking = NULL) {
+mtscr_score <- function(
+  df,
+  id_column,
+  item_column = NULL,
+  score_column,
+  top = 1,
+  format = c("minimal", "full"),
+  ties_method = c("random", "average"),
+  normalise = TRUE,
+  self_ranking = NULL
+) {
+  lifecycle::deprecate_warn("1.1.0", "mtscr_score()", "mtscr()")
   id_column <- rlang::ensym(id_column)
   item_column_quo <- enquo(item_column)
   if (!rlang::quo_is_null(item_column_quo)) {
@@ -46,12 +57,32 @@ mtscr_score <- function(df, id_column, item_column = NULL, score_column, top = 1
   df_original <- df
 
   # prepare
-  df <- mtscr_prepare(df, !!id_column, !!item_column, !!score_column, top = top, minimal = FALSE, ties_method = ties_method, normalise = normalise, self_ranking = !!self_ranking)
+  df <- mtscr_prepare(
+    df,
+    !!id_column,
+    !!item_column,
+    !!score_column,
+    top = top,
+    minimal = FALSE,
+    ties_method = ties_method,
+    normalise = normalise,
+    self_ranking = !!self_ranking
+  )
   top <- df |>
     dplyr::select(dplyr::starts_with(".ordering_top")) |>
     names() |>
     stringr::str_remove(".ordering_top")
-  model <- mtscr_model(df, !!id_column, !!item_column, !!score_column, top = top, prepared = TRUE, ties_method = ties_method, normalise = normalise, self_ranking = !!self_ranking)
+  model <- mtscr_model(
+    df,
+    !!id_column,
+    !!item_column,
+    !!score_column,
+    top = top,
+    prepared = TRUE,
+    ties_method = ties_method,
+    normalise = normalise,
+    self_ranking = !!self_ranking
+  )
 
   if (length(top) == 1) {
     model <- list(model)
@@ -78,7 +109,9 @@ mtscr_score <- function(df, id_column, item_column = NULL, score_column, top = 1
     # otherwise join will fail
     if (is.numeric(df_original[[rlang::as_name(id_column)]])) {
       df <- df |>
-        dplyr::mutate(!!rlang::as_name(id_column) := readr::parse_number(!!id_column))
+        dplyr::mutate(
+          !!rlang::as_name(id_column) := readr::parse_number(!!id_column)
+        )
     }
     df <- dplyr::left_join(df_original, df, by = rlang::as_name(id_column))
   }
