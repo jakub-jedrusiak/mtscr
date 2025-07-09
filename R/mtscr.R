@@ -86,7 +86,7 @@ mtscr <- function(
 
   # prepare
   original_df <- df
-  df <- mtscr_prepare(
+  df <- mtscr_wrangle(
     df,
     !!id_column,
     !!item_column,
