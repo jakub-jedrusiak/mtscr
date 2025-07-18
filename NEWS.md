@@ -1,3 +1,7 @@
+# Future version
+
+* Added `top_scoring()` function for simple top-scoring.
+
 # mtscr 2.0.0
 
 * Rewritten the interface to use S3 methods for `summary()` and `predict()` instead of separate functions. The package now uses the more standard workflow of fitting (with `mtscr()`) and then predicting.
