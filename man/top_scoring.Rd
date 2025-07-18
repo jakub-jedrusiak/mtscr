@@ -62,3 +62,9 @@ based on X best ideas per item. For example, if \code{top = 2} and there were 3 
 the final score will be the mean of 6 best scores – 2 per item. Set \code{by_item = TRUE} to
 get separate scores for each item.
 }
+\examples{
+data("mtscr_creativity", package = "mtscr")
+
+top_scoring(mtscr_creativity, id, SemDis_MEAN, item, top = 1:3)
+
+}

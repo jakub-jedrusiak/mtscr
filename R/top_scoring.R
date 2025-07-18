@@ -37,6 +37,11 @@
 #' the final score will be the mean of 6 best scores – 2 per item. Set `by_item = TRUE` to
 #' get separate scores for each item.
 #'
+#' @examples
+#' data("mtscr_creativity", package = "mtscr")
+#'
+#' top_scoring(mtscr_creativity, id, SemDis_MEAN, item, top = 1:3)
+#'
 #' @export
 
 top_scoring <- function(
