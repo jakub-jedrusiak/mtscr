@@ -39,8 +39,40 @@
 #'
 #' @examples
 #' data("mtscr_creativity", package = "mtscr")
+#' mtscr_creativity <- mtscr_creativity |>
+#'   dplyr::slice_sample(n = 500) # for performance, ignore
 #'
+#' # Get top1, top2, and top3 scores for each participant
 #' top_scoring(mtscr_creativity, id, SemDis_MEAN, item, top = 1:3)
+#'
+#' # Get top2 scores ignoring items
+#' top_scoring(mtscr_creativity, id, SemDis_MEAN, top = 2)
+#'
+#' # Get top2-top4 scores for each item separately
+#' top_scoring(mtscr_creativity, id, SemDis_MEAN, item, top = 2:4, by_item = TRUE)
+#'
+#' # Add the scores to the original data frame
+#' top_scoring(mtscr_creativity, id, SemDis_MEAN, item, top = 2:4, append = TRUE)
+#'
+#' # Get scores by the sum of 3 top scores (note no parentheses after the function)
+#' top_scoring(
+#'   mtscr_creativity,
+#'   id,
+#'   SemDis_MEAN,
+#'   item,
+#'   top = 3,
+#'   aggregate_function = sum
+#' )
+#'
+#' # Create a custom aggregate function (here: scale by 100, get the mean, and round)
+#' top_scoring(
+#'   mtscr_creativity,
+#'   id,
+#'   SemDis_MEAN,
+#'   item,
+#'   top = 1:3,
+#'   aggregate_function = \(x) round(mean(x) * 100)
+#' )
 #'
 #' @export
 
@@ -82,23 +114,26 @@ top_scoring <- function(
     dplyr::bind_rows()
 
   if (!by_item) {
-    item_column <- quo(NULL)
+    item_column <- rlang::quo(NULL)
   }
 
   df <- df |>
-    summarise(
+    dplyr::summarise(
       .score = aggregate_function(!!score_column),
-      .by = c(!!id_column, !!item_column, .top_number)
+      .by = c(!!id_column, !!item_column, .data$.top_number)
     ) |>
-    tidyr::pivot_wider(names_from = .top_number, values_from = .score)
+    tidyr::pivot_wider(
+      names_from = .data$.top_number,
+      values_from = .data$.score
+    )
 
   if (append) {
-    if (rlang::quo_is_null(item_column_quo)) {
+    if (rlang::quo_is_null(item_column_quo) | !by_item) {
       by <- c(rlang::as_name(id_column))
     } else {
       by <- c(rlang::as_name(id_column), rlang::as_name(item_column))
     }
-    df <- left_join(original_df, df, by = by)
+    df <- dplyr::left_join(original_df, df, by = by)
   }
 
   return(df)

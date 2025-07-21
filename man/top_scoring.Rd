@@ -64,7 +64,39 @@ get separate scores for each item.
 }
 \examples{
 data("mtscr_creativity", package = "mtscr")
+mtscr_creativity <- mtscr_creativity |>
+  dplyr::slice_sample(n = 500) # for performance, ignore
 
+# Get top1, top2, and top3 scores for each participant
 top_scoring(mtscr_creativity, id, SemDis_MEAN, item, top = 1:3)
+
+# Get top2 scores ignoring items
+top_scoring(mtscr_creativity, id, SemDis_MEAN, top = 2)
+
+# Get top2-top4 scores for each item separately
+top_scoring(mtscr_creativity, id, SemDis_MEAN, item, top = 2:4, by_item = TRUE)
+
+# Add the scores to the original data frame
+top_scoring(mtscr_creativity, id, SemDis_MEAN, item, top = 2:4, append = TRUE)
+
+# Get scores by the sum of 3 top scores (note no parentheses after the function)
+top_scoring(
+  mtscr_creativity,
+  id,
+  SemDis_MEAN,
+  item,
+  top = 3,
+  aggregate_function = sum
+)
+
+# Create a custom aggregate function (here: scale by 100, get the mean, and round)
+top_scoring(
+  mtscr_creativity,
+  id,
+  SemDis_MEAN,
+  item,
+  top = 1:3,
+  aggregate_function = \(x) round(mean(x) * 100)
+)
 
 }
