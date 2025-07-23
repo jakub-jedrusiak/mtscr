@@ -31,3 +31,10 @@ footer {
 h2 {
     margin-bottom: 15px;
 }
+
+.nice-card-header {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-top: 0.6em;
+}

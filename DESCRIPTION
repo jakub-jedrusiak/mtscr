@@ -75,6 +75,8 @@ Suggests:
     shinyWidgets,
     testthat (>= 3.0.0),
     withr,
-    writexl
+    writexl,
+    bslib,
+    rstatix
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)

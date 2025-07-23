@@ -14,7 +14,7 @@ Shiny app used as graphical interface for mtscr. Simply invoke \code{mtscr_app()
 }
 \details{
 To use the GUI you need to have the following packages installed:
-\code{DT}, \code{broom.mixed}, \code{datamods}, \code{writexl}.
+\code{DT}, \code{broom.mixed}, \code{datamods}, \code{writexl}, \code{shinyWidgets}, \code{bslib}, \code{rstatix}.
 
 First thing you see after running the app is \href{https://github.com/dreamRs/datamods}{\code{datamods}}
 window for importing your data. You can use the data already loaded in your environment

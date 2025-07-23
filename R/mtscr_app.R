@@ -8,7 +8,7 @@
 #'
 #' @details
 #' To use the GUI you need to have the following packages installed:
-#' `DT`, `broom.mixed`, `datamods`, `writexl`.
+#' `DT`, `broom.mixed`, `datamods`, `writexl`, `shinyWidgets`, `bslib`, `rstatix`.
 #'
 #' First thing you see after running the app is [`datamods`](https://github.com/dreamRs/datamods)
 #' window for importing your data. You can use the data already loaded in your environment
@@ -40,7 +40,15 @@
 #' mtscr_app()
 #' }
 mtscr_app <- function() {
-  needed_packages <- c("shiny", "DT", "datamods", "writexl", "shinyWidgets")
+  needed_packages <- c(
+    "shiny",
+    "DT",
+    "datamods",
+    "writexl",
+    "shinyWidgets",
+    "bslib",
+    "rstatix"
+  )
 
   needed_packages <- sapply(
     needed_packages,
