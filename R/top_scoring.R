@@ -12,6 +12,8 @@
 #' the final score should be based.
 #' @param by_item Boolean specifying whether the return value should aggregate scores
 #' from different items.
+#' @param na_if_less Whether to return `NA` if the number of ideas is less than top. Otherwise
+#' will calculate the scores based on the available number of ideas (default).
 #' @param append Boolean specifying whether the return value should be a new data frame with
 #' person-level scores (`FALSE`, default) or the original data frame with scores appended as
 #' new columns (`TRUE`).
@@ -83,6 +85,7 @@ top_scoring <- function(
   item_column = NULL,
   top = 1,
   by_item = FALSE,
+  na_if_less = FALSE,
   append = FALSE,
   aggregate_function = mean
 ) {
@@ -117,9 +120,19 @@ top_scoring <- function(
     item_column <- rlang::quo(NULL)
   }
 
+  aggregate_scores <- function(score_column, top_number) {
+    if (
+      na_if_less &
+        dplyr::n() < as.numeric(stringr::str_extract(top_number, "\\d+"))
+    ) {
+      return(NA)
+    }
+    aggregate_function(score_column)
+  }
+
   df <- df |>
     dplyr::summarise(
-      .score = aggregate_function(!!score_column),
+      .score = aggregate_scores(!!score_column, unique(.data$.top_number)),
       .by = c(!!id_column, !!item_column, .data$.top_number)
     ) |>
     tidyr::pivot_wider(

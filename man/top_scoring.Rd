@@ -11,6 +11,7 @@ top_scoring(
   item_column = NULL,
   top = 1,
   by_item = FALSE,
+  na_if_less = FALSE,
   append = FALSE,
   aggregate_function = mean
 )
@@ -30,6 +31,9 @@ the final score should be based.}
 
 \item{by_item}{Boolean specifying whether the return value should aggregate scores
 from different items.}
+
+\item{na_if_less}{Whether to return \code{NA} if the number of ideas is less than top. Otherwise
+will calculate the scores based on the available number of ideas (default).}
 
 \item{append}{Boolean specifying whether the return value should be a new data frame with
 person-level scores (\code{FALSE}, default) or the original data frame with scores appended as
