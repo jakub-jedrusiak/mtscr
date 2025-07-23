@@ -1,6 +1,7 @@
 # Future version
 
 * Added `top_scoring()` function for simple top-scoring.
+* Added simple top scoring to the GUI.
 
 # mtscr 2.0.0
 
