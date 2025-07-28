@@ -13,7 +13,8 @@ top_scoring(
   by_item = FALSE,
   na_if_less = FALSE,
   append = FALSE,
-  aggregate_function = mean
+  aggregate_function = mean,
+  top_all = TRUE
 )
 }
 \arguments{
@@ -42,6 +43,8 @@ new columns (\code{TRUE}).}
 \item{aggregate_function}{The function that should be used to aggregate idea-level scores
 into person-level scores. Should be a function, not a call
 (e.g., \code{aggregate_function = mean} and not \code{aggregate_function = mean()})}
+
+\item{top_all}{Whether to calculate the top score based on all ideas, not only the top-X.}
 }
 \value{
 The return value is a dataframe. By default, it contains an id column and a series

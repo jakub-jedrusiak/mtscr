@@ -20,6 +20,7 @@
 #' @param aggregate_function The function that should be used to aggregate idea-level scores
 #' into person-level scores. Should be a function, not a call
 #' (e.g., `aggregate_function = mean` and not `aggregate_function = mean()`)
+#' @param top_all Whether to calculate the top score based on all ideas, not only the top-X.
 #'
 #' @return The return value is a dataframe. By default, it contains an id column and a series
 #' of score columns named `top1`, `top2` etc. for each element of the vector given in the `top`
@@ -87,7 +88,8 @@ top_scoring <- function(
   by_item = FALSE,
   na_if_less = FALSE,
   append = FALSE,
-  aggregate_function = mean
+  aggregate_function = mean,
+  top_all = TRUE
 ) {
   id_column <- rlang::ensym(id_column)
   item_column_quo <- rlang::enquo(item_column)
@@ -104,17 +106,24 @@ top_scoring <- function(
     ))
   }
 
-  if (append) {
+  if (append | top_all) {
     original_df <- df
   }
 
-  df <- purrr::map(top, \(top) {
+  df <- purrr::map(c(top), \(top) {
     df |>
       dplyr::arrange(!!id_column, !!item_column, dplyr::desc(!!score_column)) |>
       dplyr::slice(seq(1, top), .by = c(!!id_column, !!item_column)) |>
       dplyr::mutate(.top_number = paste0("top", top))
   }) |>
     dplyr::bind_rows()
+
+  if (top_all) {
+    df <- dplyr::bind_rows(
+      df,
+      dplyr::mutate(original_df, .top_number = "top_all")
+    )
+  }
 
   if (!by_item) {
     item_column <- rlang::quo(NULL)
@@ -123,7 +132,8 @@ top_scoring <- function(
   aggregate_scores <- function(score_column, top_number) {
     if (
       na_if_less &
-        dplyr::n() < as.numeric(stringr::str_extract(top_number, "\\d+"))
+        dplyr::n() < as.numeric(stringr::str_extract(top_number, "\\d+")) &
+        top_number != "top_all"
     ) {
       return(NA)
     }
