@@ -67,14 +67,14 @@
 #'   aggregate_function = sum
 #' )
 #'
-#' # Create a custom aggregate function (here: scale by 100, get the mean, and round)
+#' # Create a custom aggregate function (here: scale by 100, round and then get the mean)
 #' top_scoring(
 #'   mtscr_creativity,
 #'   id,
 #'   SemDis_MEAN,
 #'   item,
 #'   top = 1:3,
-#'   aggregate_function = \(x) round(mean(x) * 100)
+#'   aggregate_function = \(x) mean(round(x * 100))
 #' )
 #'
 #' @export

@@ -166,6 +166,45 @@ mtscr_creativity |>
 #> #   score_top2 <dbl>, score_top3 <dbl>
 ```
 
+### Simple top-scoring
+
+This package also includes a function to quickly calculate the mean
+score and the top-X scores. You can do that through `top_socring()`.
+This function accepts preety much the same arguments as `mtscr()`, but
+it returns a data frame with scores instead of a model. It also
+calculates a simple mean by default.
+
+``` r
+top_scoring(mtscr_creativity, id, SemDis_MEAN, item, top = 1:3)
+#> # A tibble: 149 × 5
+#>       id  top1  top2  top3 top_all
+#>    <dbl> <dbl> <dbl> <dbl>   <dbl>
+#>  1 84176 0.995 0.960 0.925   0.896
+#>  2 84177 0.878 0.869 0.862   0.858
+#>  3 84178 0.968 0.937 0.920   0.912
+#>  4 84188 1.04  1.01  0.987   0.983
+#>  5 84193 0.938 0.890 0.888   0.888
+#>  6 84206 0.926 0.900 0.871   0.837
+#>  7 84211 0.960 0.949 0.949   0.949
+#>  8 84226 1.01  0.972 0.938   0.865
+#>  9 84228 0.994 0.962 0.941   0.905
+#> 10 84236 1.04  0.998 0.989   0.977
+#> # ℹ 139 more rows
+```
+
+You can get the top-X scores for each item separately by setting
+`by_item = TRUE`. If you want best scores no matter the item, do not set
+the `item_column` argument. If you set `by_item = FALSE` (or don’t
+explicitly set it) and set `item_column`, first the by item means will
+be calculated and then the person-score will be the mean of these means.
+Control what to do if less than top answers are present (e.g., you want
+top-3 but someone came up with only 2 ideas) with `na_if_less` argument.
+By default, the function will calculate the scores based on the
+available number of ideas, but you can set it to `TRUE` to return `NA`
+if there are not enough ideas.
+
+Simple top-scoring is also availabe through the GUI, see below.
+
 ### Graphical User Interface
 
 This package includes a Shiny app which can be used as a GUI. You can
