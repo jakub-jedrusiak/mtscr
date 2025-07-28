@@ -170,7 +170,7 @@ mtscr_creativity |>
 
 This package also includes a function to quickly calculate the mean
 score and the top-X scores. You can do that through `top_socring()`.
-This function accepts preety much the same arguments as `mtscr()`, but
+This function accepts pretty much the same arguments as `mtscr()`, but
 it returns a data frame with scores instead of a model. It also
 calculates a simple mean by default.
 
@@ -203,7 +203,7 @@ By default, the function will calculate the scores based on the
 available number of ideas, but you can set it to `TRUE` to return `NA`
 if there are not enough ideas.
 
-Simple top-scoring is also availabe through the GUI, see below.
+Simple top-scoring is also available through the GUI, see below.
 
 ### Graphical User Interface
 
